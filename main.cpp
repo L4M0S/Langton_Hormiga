@@ -13,15 +13,18 @@
 #define SUR 3
 #define OESTE 4
 
-int tablero[50][50];
+#define DER 1
+#define IZD 3
 
-void ManipularCursor()
+#define TAM 50
+
+void ManipularCursor(bool visibilidad, int tamano)
 {
      HANDLE hCon;
      hCon = GetStdHandle(STD_OUTPUT_HANDLE);
      CONSOLE_CURSOR_INFO cci;
-     cci.dwSize=100;							//TAMAÑO DEL CURSOR 1-100
-     cci.bVisible=TRUE;					//VISIBILIDAD DEL CURSOR TRUE/FALSE
+     cci.dwSize=tamano;							//TAMAÑO DEL CURSOR 1-100
+     cci.bVisible=visibilidad;					//VISIBILIDAD DEL CURSOR TRUE/FALSE
      
      SetConsoleCursorInfo(hCon,&cci);         
 }
@@ -37,13 +40,30 @@ void gotoxy(int x, int y)
     SetConsoleCursorPosition(hCon, dwPos);
 }
 
+int tablero[TAM][TAM];
+
 void IniciarTablero()
 {	
-	for (int i=0; i<50; i++)
+	for (int i=0; i<TAM; i++)
 	{
-		for (int j=0; j<50; j++)
+		for (int j=0; j<TAM; j++)
 		{
 			tablero[i][j]=NEGRA;			//INICIA TODAS LAS CASILLAS EN NEGRO
+		}
+	}
+}
+
+void PintarTablero()
+{
+	for (int i=0; i<TAM; i++)
+	{
+		for (int j=0; j<TAM; j++)
+		{
+			if(tablero[i][j]==BLANCA)
+			{
+				gotoxy(i,j);
+				printf("%c",219);
+			}
 		}
 	}
 }
@@ -51,27 +71,31 @@ void IniciarTablero()
 	
 class HORMIGA
 {
-	int x,y, direccion, casilla, num;
+	int x;	//coordenada en X
+	int y;	//coordenada en Y
+	int dir;	//direccion hacia la que ve  {0,1,2,3}
 	
 	public:
 		HORMIGA();
 		
-		void NUM()
-		{
-			printf("%i",num);
-		}
-				
+		void girar(int);
+		
 };
 
+void HORMIGA::girar(int direccion)
+{
 	
+}
+
+
 int main()
 {
-	ManipularCursor();
+	ManipularCursor(FALSE,100);
 	
-	gotoxy(10,10);
-	//printf("%c", 219);
-	
-	IniciarTablero(); 
+	IniciarTablero();
+	gotoxy(0,0); printf("%i", 4%4);
+	//tablero[10][10]=BLANCA;
+	PintarTablero();
 	
 	while(!getchar())
 	{
