@@ -18,6 +18,7 @@
 
 #define TAM 50
 
+///////////////////////////////////////////////////////
 void ManipularCursor(bool visibilidad, int tamano)
 {
      HANDLE hCon;
@@ -39,7 +40,9 @@ void gotoxy(int x, int y)
     
     SetConsoleCursorPosition(hCon, dwPos);
 }
+/////////////////////////////////////////////////////////
 
+/////////////FUNCIONES DEL TABLERO///////////////////////
 int tablero[TAM][TAM];
 
 void IniciarTablero()
@@ -67,40 +70,81 @@ void PintarTablero()
 		}
 	}
 }
-	
-	
+////////////////////////////////////////////////////////////
+
+//////////////CLASE HORMIGA////////////////////////////////////
 class HORMIGA
-{
-	int x;	//coordenada en X
-	int y;	//coordenada en Y
-	int dir;	//direccion hacia la que ve  {0,1,2,3}
-	
+{	
 	public:
+		int x;	//coordenada en X
+		int y;	//coordenada en Y
+		int dir;	//direccion hacia la que ve  {0,1,2,3}
 		HORMIGA();
 		
 		void girar(int);
-		
+		void avanzar(int);
+		void paso();	
 };
+
+HORMIGA::HORMIGA()
+{
+	x=25;	//coordenada en X
+	y=25;	//coordenada en Y
+	dir=NORTE;	//direccion hacia la que ve  {0,1,2,3}
+}
 
 void HORMIGA::girar(int direccion)
 {
-	
+	dir=(dir+direccion)%4;
 }
 
+void HORMIGA::avanzar(int direccion)
+{
+	if(direccion==NORTE) y--;
+	else if(direccion==ESTE) x++;
+	else if(direccion==SUR) y++;
+	else if(direccion==OESTE) x--;
+}
+
+void HORMIGA::paso()
+{
+	if(tablero[x][y]==BLANCA)
+	{
+		dir=IZD;
+		tablero[x][y]=NEGRA;
+	}
+	else if(tablero[x][y]==NEGRA)
+	{
+		dir=DER;
+		tablero[x][y]=BLANCA;
+	}
+	girar(dir);
+	avanzar(dir);
+}
+//////////////////////////////////////////////////////////////////////
 
 int main()
 {
+	int contador=1;
 	ManipularCursor(FALSE,100);
 	
 	IniciarTablero();
-	gotoxy(0,0); printf("%i", 4%4);
+	//gotoxy(0,0); printf("%i", 4%4);
 	//tablero[10][10]=BLANCA;
 	PintarTablero();
 	
-	while(!getchar())
+	HORMIGA hormiga;
+	
+	while(true)
 	{
+		//gotoxy(0,0); printf("%i",contador);
+		printf("%i %i %i",hormiga.x, hormiga.y, hormiga.dir);
+		hormiga.paso();
+		//PintarTablero();
+		//contador++;
+		fgetc(stdin);
 	}
 	
-	getchar();
+	return 0;
 }
 
