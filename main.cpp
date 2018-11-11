@@ -110,15 +110,15 @@ void HORMIGA::paso()
 {
 	if(tablero[x][y]==BLANCA)
 	{
-		dir=IZD;
+		girar(IZD);
 		tablero[x][y]=NEGRA;
 	}
 	else if(tablero[x][y]==NEGRA)
 	{
-		dir=DER;
+		girar(DER);
 		tablero[x][y]=BLANCA;
 	}
-	girar(dir);
+	//girar(dir);
 	avanzar(dir);
 }
 //////////////////////////////////////////////////////////////////////
