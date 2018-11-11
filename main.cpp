@@ -8,15 +8,15 @@
 #define BLANCA 1
 #define NEGRA 0
 
-#define NORTE 1
-#define ESTE 2
-#define SUR 3
-#define OESTE 4
+#define NORTE 0
+#define ESTE 1
+#define SUR 2
+#define OESTE 3
 
 #define DER 1
 #define IZD 3
 
-#define TAM 50
+#define TAM 90
 
 ///////////////////////////////////////////////////////
 void ManipularCursor(bool visibilidad, int tamano)
@@ -67,6 +67,11 @@ void PintarTablero()
 				gotoxy(i,j);
 				printf("%c",219);
 			}
+			else if(tablero[i][j]==NEGRA)
+			{
+				gotoxy(i,j);
+				printf("%c",32);
+			}
 		}
 	}
 }
@@ -88,8 +93,8 @@ class HORMIGA
 
 HORMIGA::HORMIGA()
 {
-	x=25;	//coordenada en X
-	y=25;	//coordenada en Y
+	x=40;	//coordenada en X
+	y=40;	//coordenada en Y
 	dir=NORTE;	//direccion hacia la que ve  {0,1,2,3}
 }
 
@@ -100,10 +105,10 @@ void HORMIGA::girar(int direccion)
 
 void HORMIGA::avanzar(int direccion)
 {
-	if(direccion==NORTE) y--;
-	else if(direccion==ESTE) x++;
-	else if(direccion==SUR) y++;
-	else if(direccion==OESTE) x--;
+	if(direccion==NORTE) {y--; return;}
+	else if(direccion==ESTE) {x++; return;}
+	else if(direccion==SUR) {y++; return;}
+	else if(direccion==OESTE) {x--; return;}
 }
 
 void HORMIGA::paso()
@@ -137,12 +142,12 @@ int main()
 	
 	while(true)
 	{
-		//gotoxy(0,0); printf("%i",contador);
-		printf("%i %i %i",hormiga.x, hormiga.y, hormiga.dir);
+		gotoxy(91,91); printf("%i",contador);
+		//printf("%i %i %i",hormiga.x, hormiga.y, hormiga.dir);
 		hormiga.paso();
-		//PintarTablero();
-		//contador++;
-		fgetc(stdin);
+		PintarTablero();
+		contador++;
+		//fgetc(stdin);
 	}
 	
 	return 0;
