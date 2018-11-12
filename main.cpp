@@ -142,11 +142,16 @@ int main()
 	
 	while(true)
 	{
-		gotoxy(91,91); printf("%i",contador);
 		//printf("%i %i %i",hormiga.x, hormiga.y, hormiga.dir);
-		hormiga.paso();
+		
+		for(int i=0; i<100;i++)
+		{
+			hormiga.paso();
+			
+			contador++;
+		}
+		gotoxy(91,91); printf("%i",contador);
 		PintarTablero();
-		contador++;
 		//fgetc(stdin);
 	}
 	
