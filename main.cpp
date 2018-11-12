@@ -105,10 +105,13 @@ void HORMIGA::girar(int direccion)
 
 void HORMIGA::avanzar(int direccion)
 {
-	if(direccion==NORTE) {y--; return;}
-	else if(direccion==ESTE) {x++; return;}
-	else if(direccion==SUR) {y++; return;}
-	else if(direccion==OESTE) {x--; return;}
+	if(direccion==NORTE) {y--;}
+	else if(direccion==ESTE) {x++;}
+	else if(direccion==SUR) {y++;}
+	else if(direccion==OESTE) {x--;}
+	
+	x=(x+TAM)%TAM;
+	y=(y+TAM)%TAM;
 }
 
 void HORMIGA::paso()
