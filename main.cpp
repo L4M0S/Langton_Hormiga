@@ -44,6 +44,7 @@ void gotoxy(int x, int y)
 
 /////////////FUNCIONES DEL TABLERO///////////////////////
 int tablero[TAM][TAM];
+int anterior[TAM][TAM];
 
 void IniciarTablero()
 {	
@@ -52,8 +53,11 @@ void IniciarTablero()
 		for (int j=0; j<TAM; j++)
 		{
 			tablero[i][j]=NEGRA;			//INICIA TODAS LAS CASILLAS EN NEGRO
+			
+			anterior[i][j]=NEGRA;
 		}
 	}
+	
 }
 
 void PintarTablero()
@@ -62,16 +66,23 @@ void PintarTablero()
 	{
 		for (int j=0; j<TAM; j++)
 		{
-			if(tablero[i][j]==BLANCA)
+			if(tablero[i][j]==BLANCA && tablero[i][j]!=anterior[i][j])
 			{
 				gotoxy(i,j);
 				printf("%c",219);
 			}
-			else if(tablero[i][j]==NEGRA)
+			else if(tablero[i][j]==NEGRA && tablero[i][j]!=anterior[i][j])
 			{
 				gotoxy(i,j);
 				printf("%c",32);
 			}
+		}
+	}
+	for (int k=0; k<TAM; k++)
+	{
+		for (int t=0; t<TAM; t++)
+		{
+			anterior[k][t]=tablero[k][t];
 		}
 	}
 }
@@ -133,7 +144,7 @@ void HORMIGA::paso()
 
 int main()
 {
-	int contador=1;
+	//int contador=1;
 	ManipularCursor(FALSE,100);
 	
 	IniciarTablero();
@@ -145,17 +156,20 @@ int main()
 	
 	while(true)
 	{
+		//gotoxy(91,91); printf("%i",contador);
 		//printf("%i %i %i",hormiga.x, hormiga.y, hormiga.dir);
 		
-		for(int i=0; i<100;i++)
-		{
+		//for(int i=0; i<100;i++)
+		//{
 			hormiga.paso();
 			
-			contador++;
-		}
-		gotoxy(91,91); printf("%i",contador);
+			
+		//}
+		
 		PintarTablero();
+		//contador++;
 		//fgetc(stdin);
+		//Sleep(10);
 	}
 	
 	return 0;
